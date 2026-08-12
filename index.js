@@ -7,6 +7,25 @@ tweetBtn.addEventListener('click', function(){
     console.log(tweetInput.value)
 })
 
+document.addEventListener('click', function(e){
+    // console.log(e)
+    if (e.target.dataset.likes){
+        handleLikeClick(e.target.dataset.likes)
+    }
+})
+
+function handleLikeClick(tweetId){
+    
+    const targetTweetObj = tweetsData.filter(function(tweet){
+        return tweet.uui === tweetId
+    })[0].likes++
+    
+    
+
+    console.log(targetTweetObj)
+    
+}
+
 function getFeedHtml(){
     let feedHtml = ``
     tweetsData.forEach(function(tweetDetails){
@@ -38,6 +57,7 @@ function getFeedHtml(){
     return feedHtml;
     console.log(feedHtml)
 }
+
 
 function render(){
     document.getElementById('feed').innerHTML = getFeedHtml()
