@@ -58,6 +58,17 @@ function handleRetweetClick(tweetId){
 function getFeedHtml(){
     let feedHtml = ``
     tweetsData.forEach(function(tweetDetails){
+        let likedIconClass = ''
+        let sharedIconClass = ''
+
+        if(tweetDetails.isLiked){
+            likedIconClass = 'liked'
+        }
+
+        if(tweetDetails.isRetweeted){
+            sharedIconClass = 'retweeted'
+        }
+
         feedHtml += `
         <div class="tweet">
             <div class="tweet-inner">
@@ -71,11 +82,11 @@ function getFeedHtml(){
                             ${tweetDetails.replies.length}
                         </span>
                         <span class="tweet-detail">
-                            <i class="fa-solid fa-heart" data-likes="${tweetDetails.uuid}"></i>
+                            <i class="fa-solid fa-heart ${likedIconClass}" data-likes="${tweetDetails.uuid}"></i>
                             ${tweetDetails.likes}
                         </span>
                         <span class="tweet-detail">
-                            <i class="fa-solid fa-share-from-square" data-retweet="${tweetDetails.uuid}"></i>
+                            <i class="fa-solid fa-share-from-square ${sharedIconClass}" data-retweet="${tweetDetails.uuid}"></i>
                             ${tweetDetails.retweets}
                         </span>
                     </div>   
