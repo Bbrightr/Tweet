@@ -3,16 +3,23 @@ import { tweetsData } from './data.js'
 const tweetBtn = document.getElementById('tweet-btn')
 const tweetInput = document.getElementById('tweet-input')
 
-tweetBtn.addEventListener('click', function(){
-    console.log(tweetInput.value)
-})
+// tweetBtn.addEventListener('click', function(){
+//     console.log(tweetInput.value)
+// })
 
 document.addEventListener('click', function(e){
   
      if (e.target.dataset.likes){
         handleLikeClick(e.target.dataset.likes)
-     }else if(e.target.dataset.retweet) {
+     }
+     else if(e.target.dataset.retweet) {
         handleRetweetClick(e.target.dataset.retweet)
+     }
+     else if(e.target.dataset.replies){
+        handleReplyClick(e.target.dataset.replies)  
+     }
+     else if(e.target.id === 'tweet-btn'){
+        handleTweetBtnClick()
      }
      
      
@@ -52,6 +59,17 @@ function handleRetweetClick(tweetId){
     targetRetweetObj.isRetweeted = !targetRetweetObj.isRetweeted
     render()
 }
+
+function handleReplyClick(replyId){
+
+    document.getElementById(`replies-${replyId}`).classList.toggle('hidden')
+
+}
+
+function handleTweetBtnClick(){
+    console.log(tweetInput.value)
+    // console.log('water')
+}
   
 
 function getFeedHtml(){
@@ -70,8 +88,19 @@ function getFeedHtml(){
 
         let repliesHtml = ""
 
-        if (tweet.replies.length > 0){
-            console.log(tweet.uuid)
+        if (tweetDetails.replies.length > 0){
+            tweetDetails.replies.forEach(function(reply){
+                repliesHtml += `<div class"tweet-reply">
+                    <div class="tweet-inner">
+                        <img src="${reply.profilePic}" class="profile-pic">
+                        <div>
+                            <p class="handle">${reply.handle}</p>
+                            <p class="tweet-text">${reply.tweetText}</p>
+                        </div>
+                    </div>
+
+                </div>`
+            })
         }
  
         feedHtml += `
@@ -97,6 +126,9 @@ function getFeedHtml(){
                     </div>   
                 </div>            
             </div>
+        </div>
+        <div id="replies-${tweetDetails.uuid}">
+            ${repliesHtml}
         </div>`
     })
     return feedHtml;
