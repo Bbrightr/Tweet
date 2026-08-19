@@ -8,8 +8,7 @@ tweetBtn.addEventListener('click', function(){
 })
 
 document.addEventListener('click', function(e){
-    // console.log(e.target.dataset)
-    // console.log(e)
+  
      if (e.target.dataset.likes){
         handleLikeClick(e.target.dataset.likes)
      }else if(e.target.dataset.retweet) {
@@ -69,6 +68,12 @@ function getFeedHtml(){
             sharedIconClass = 'retweeted'
         }
 
+        let repliesHtml = ""
+
+        if (tweet.replies.length > 0){
+            console.log(tweet.uuid)
+        }
+ 
         feedHtml += `
         <div class="tweet">
             <div class="tweet-inner">
